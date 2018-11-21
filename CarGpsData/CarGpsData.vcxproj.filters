@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="CarGpsSocket">
+      <UniqueIdentifier>{d73adab0-179c-4596-bcd9-dcb8ac672da1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CarGpsFile">
+      <UniqueIdentifier>{ddbb29af-9d06-4ed5-a57b-e40f0100eedd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CarGpsSql">
+      <UniqueIdentifier>{88825ca2-e1a5-4834-9012-df4529115e16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CarGpsUtilFunc">
+      <UniqueIdentifier>{1c9d609a-6303-4c5d-8cd5-392b81e702cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Define">
+      <UniqueIdentifier>{96fec481-b3e0-40ac-932e-a820befd04ab}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CarGpsFile\CarGpsFile.h">
+      <Filter>CarGpsFile</Filter>
+    </ClInclude>
+    <ClInclude Include="CarGpsSql\CarGpsSql.h">
+      <Filter>CarGpsSql</Filter>
+    </ClInclude>
+    <ClInclude Include="CarGpsSocket\CarGpsSocket.h">
+      <Filter>CarGpsSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="CarGpsUtilFunc\CarGpsUtil.h">
+      <Filter>CarGpsUtilFunc</Filter>
+    </ClInclude>
+    <ClInclude Include="CarGpsDef\CarGpsMsgDef.h">
+      <Filter>Define</Filter>
+    </ClInclude>
+    <ClInclude Include="CarGpsDef\CarGpsRecordDef.h">
+      <Filter>Define</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CarGpsData.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CarGpsFile\CarGpsFile.cpp">
+      <Filter>CarGpsFile</Filter>
+    </ClCompile>
+    <ClCompile Include="CarGpsSql\CarGpsSql.cpp">
+      <Filter>CarGpsSql</Filter>
+    </ClCompile>
+    <ClCompile Include="CarGpsSocket\CarGpsSocket.cpp">
+      <Filter>CarGpsSocket</Filter>
+    </ClCompile>
+    <ClCompile Include="CarGpsUtilFunc\CarGpsUtil.cpp">
+      <Filter>CarGpsUtilFunc</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
