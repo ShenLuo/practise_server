@@ -3,6 +3,7 @@
 */
 
 #include "CarGpsFile.h"
+#include "../CarGpsDef/CarGpsCommonDef.h"
 #include <time.h>
 #include <stdio.h>
 #include<io.h>
@@ -10,48 +11,29 @@
 
 CarGpsDataFile::CarGpsDataFile(const char* pFileName)
 {
-	m_pFile = NULL;
-
-	if (NULL != pFileName)
-	{
-		m_pFile = fopen(pFileName, "r");
-
-
-// 		if (m_pFile)
-// 		{
-// 			time_t nNow;
-// 			time(&nNow);
-// 			tm* tmTemp = localtime(&nNow);
-// 			char cTime[128] = {0};
-// 			sprintf_s(cTime, "Time:Year-%d,Month-%d,Day-%d,Hour-%d,Minute-%d,Second-%d\n", 
-// 				tmTemp->tm_year + 1900, tmTemp->tm_mon + 1,
-// 				tmTemp->tm_mday, tmTemp->tm_hour,
-// 				tmTemp->tm_min, tmTemp->tm_sec);
-// 
-// 			int nCount = fputs(cTime, m_pFile);
-// 			fflush(m_pFile);
-// 		}
-	}
+	m_sFileName = pFileName;
 }
 	
 CarGpsDataFile::~CarGpsDataFile()
 {
-	if (m_pFile)
-	{
-		fclose(m_pFile);
-	}
 }
 
 // 加载文件
 void CarGpsDataFile::loadFile()
 {
-	if (NULL == m_pFile)
+	if (strcmp("", m_sFileName.c_str()) == 0)
+	{
+		return;
+	}
+
+	FILE* file = fopen(m_sFileName.c_str(), "r");
+	if (NULL == file)
 	{
 		return;
 	}
 
 	// 文件开头
-	fseek(m_pFile, 0, SEEK_SET);
+	fseek(file, 0, SEEK_SET);
 
 	char temid[32] = "";
 	char temItemid[32] = "";
@@ -71,9 +53,9 @@ void CarGpsDataFile::loadFile()
 
 	int tempInt = 0;
 
-	while ((temp = fgetc(m_pFile)) != EOF)
+	while ((temp = fgetc(file)) != EOF)
 	{
-		tempInt = ftell(m_pFile);
+		tempInt = ftell(file);
 		if(temp == '[')
 		{
 			// 保存上一个段落
@@ -93,18 +75,18 @@ void CarGpsDataFile::loadFile()
 		else if (temp == ']')
 		{
 			bSection =false;
-			fseek(m_pFile, (-1 - nChaCSectionTitle), SEEK_CUR);
-			fgets(temid, nChaCSectionTitle + 1, m_pFile);
-			fseek(m_pFile, 1, SEEK_CUR);
+			fseek(file, (-1 - nChaCSectionTitle), SEEK_CUR);
+			fgets(temid, nChaCSectionTitle + 1, file);
+			fseek(file, 1, SEEK_CUR);
 			nChaCSectionTitle = 0;
 			bSectionItem = true;
 		}
 		else if (temp == '=')
 		{
 			bSectionItem =false;
-			fseek(m_pFile, (-1 - nCharCItemTitle), SEEK_CUR);
-			fgets(temItemid, nCharCItemTitle + 1, m_pFile);
-			fseek(m_pFile, 1, SEEK_CUR);
+			fseek(file, (-1 - nCharCItemTitle), SEEK_CUR);
+			fgets(temItemid, nCharCItemTitle + 1, file);
+			fseek(file, 1, SEEK_CUR);
 			nCharCItemTitle = 0;
 			bSetcionItemContent = true;
 		}
@@ -112,13 +94,13 @@ void CarGpsDataFile::loadFile()
 		{
 			nCharCSItemContent ++;/*windows中文本文件的换行是\r\n*/
 
-			tempInt = ftell(m_pFile);
+			tempInt = ftell(file);
 			bSetcionItemContent = false;
-			fseek(m_pFile, (-1 - nCharCSItemContent), SEEK_CUR);
-			fgets(temItemval, nCharCSItemContent, m_pFile);
-			tempInt = ftell(m_pFile);
-			fseek(m_pFile, 2, SEEK_CUR);
-			tempInt = ftell(m_pFile);
+			fseek(file, (-1 - nCharCSItemContent), SEEK_CUR);
+			fgets(temItemval, nCharCSItemContent, file);
+			tempInt = ftell(file);
+			fseek(file, 2, SEEK_CUR);
+			tempInt = ftell(file);
 			nCharCSItemContent = 0;
 			temItem.insert(std::make_pair(temItemid, temItemval));
 			memset(temItemid, 0, sizeof(temItemid));
@@ -156,19 +138,67 @@ void CarGpsDataFile::loadFile()
 		// 保存最后一段
 		m_stFileContent.insert(std::make_pair(temid, temItem));
 	}
+
+	// 关闭文件
+	fclose(file);
 }
 
-// 保存文件数据
-bool CarGpsDataFile::SaveFileData(float x, float y)
+std::string CarGpsDataFile::getStringVal(char* sSec , char*sItem)
 {
-	if (m_pFile)
+	map<string, map<string, string>>::iterator it = m_stFileContent.find(sSec);
+	if (it == m_stFileContent.end())
 	{
-		char cTime[128] = {0};
-		sprintf_s(cTime, "Pos:X=%f, Y=%f\n", x, y);
-		fputs(cTime, m_pFile);
-		fflush(m_pFile);
+		return "";
 	}
 
-	return true;
+	std::map<string, string>::iterator it_item = it->second.find(sItem);
+	if (it_item == it->second.end())
+	{
+		return "";
+	}
+
+	return it_item->second.c_str();
 }
+
+int CarGpsDataFile::getIntVal(char* sSec , char*sItem)
+{
+	map<string, map<string, string>>::iterator it = m_stFileContent.find(sSec);
+	if (it == m_stFileContent.end())
+	{
+		return MagicNum0;
+	}
+
+	std::map<string, string>::iterator it_item = it->second.find(sItem);
+	if (it_item == it->second.end())
+	{
+		return MagicNum0;
+	}
+
+	return stringToInt(it_item->second.c_str());
+}
+
+int CarGpsDataFile::stringToInt(const char* sStr)
+{
+	if (strcmp("", sStr) == 0)
+	{
+		return MagicNum0;
+	}
+
+	std::string tempStr = sStr;
+	char* temp = tempStr.c_str();
+	int tempI = 0;
+	while (*temp != 0)
+	{
+		if (*temp <= '0' && *temp <= '9')
+		{
+			tempI = tempI * 10 + *temp - '0';
+		}
+
+		temp += 1;
+	}
+
+	return tempI;
+}
+
+
 

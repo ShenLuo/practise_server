@@ -19,10 +19,13 @@ public:
 	// 加载配置文件
 	void loadFile();
 
-	// 保存文件数据
-	bool SaveFileData(float x, float y);
+	std::string getStringVal(char* sSec , char*sItem);
+	int getIntVal(char* sSec , char*sItem);
 
 private:
-	FILE* m_pFile;
+	int stringToInt(const char* sStr);
+
+private:
+	std::string m_sFileName;
 	map<string, map<string, string>> m_stFileContent;
 };

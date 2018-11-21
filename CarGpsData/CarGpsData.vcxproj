@@ -150,6 +150,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CarGpsDef\CarGpsCommonDef.h" />
     <ClInclude Include="CarGpsDef\CarGpsMsgDef.h" />
     <ClInclude Include="CarGpsDef\CarGpsRecordDef.h" />
     <ClInclude Include="CarGpsFile\CarGpsFile.h" />
