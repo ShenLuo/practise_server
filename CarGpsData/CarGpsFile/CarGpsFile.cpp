@@ -184,17 +184,15 @@ int CarGpsDataFile::stringToInt(const char* sStr)
 		return MagicNum0;
 	}
 
-	std::string tempStr = sStr;
-	char* temp = tempStr.c_str();
 	int tempI = 0;
-	while (*temp != 0)
+	while (*sStr != 0)
 	{
-		if (*temp <= '0' && *temp <= '9')
+		if (*sStr <= '0' && *sStr <= '9')
 		{
-			tempI = tempI * 10 + *temp - '0';
+			tempI = tempI * 10 + *sStr - '0';
 		}
 
-		temp += 1;
+		sStr += 1;
 	}
 
 	return tempI;
