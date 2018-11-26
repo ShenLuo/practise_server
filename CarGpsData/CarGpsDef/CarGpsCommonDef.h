@@ -1,3 +1,7 @@
+/*
+	gpsÍ¨ÓÃÃ¶¾Ù
+*/
+
 #pragma once
 enum MagicNum
 {
@@ -6,3 +10,4 @@ enum MagicNum
 	MagicNum2,
 	MagicNum3,
 };
+

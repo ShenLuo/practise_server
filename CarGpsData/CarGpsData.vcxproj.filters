@@ -28,6 +28,12 @@
     <Filter Include="Define">
       <UniqueIdentifier>{96fec481-b3e0-40ac-932e-a820befd04ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CarGpsServer">
+      <UniqueIdentifier>{8510159a-cd92-477b-a8e1-d28db1e6da6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CarGpsLogic">
+      <UniqueIdentifier>{bb101745-644e-4d80-b750-fde87299f512}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -60,6 +66,15 @@
     <ClInclude Include="CarGpsDef\CarGpsCommonDef.h">
       <Filter>Define</Filter>
     </ClInclude>
+    <ClInclude Include="CarGpsServer\CarGpsServer.h">
+      <Filter>CarGpsServer</Filter>
+    </ClInclude>
+    <ClInclude Include="CarGpsLogic\CarGpsLogic.h">
+      <Filter>CarGpsLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="CarGpsSocket\CarGpsSocketDef.h">
+      <Filter>CarGpsSocket</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -79,6 +94,12 @@
     </ClCompile>
     <ClCompile Include="CarGpsUtilFunc\CarGpsUtil.cpp">
       <Filter>CarGpsUtilFunc</Filter>
+    </ClCompile>
+    <ClCompile Include="CarGpsServer\CarGpsServer.cpp">
+      <Filter>CarGpsServer</Filter>
+    </ClCompile>
+    <ClCompile Include="CarGpsLogic\CarGpsLogic.cpp">
+      <Filter>CarGpsLogic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

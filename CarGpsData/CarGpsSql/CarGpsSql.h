@@ -19,6 +19,14 @@ public:
 	// 释放mysql连接
 	~CarGpsSql();
 
+	// 
+	int start();
+
+	// 
+	int stop();
+
+
+
 	// 加载数据库数据
 	bool LoadDataFromDataBase();
 
@@ -54,8 +62,20 @@ private:
 	bool SavePlayerInfoRecordToDataBase();
 
 private:
-	// 数据库数据结构
-	MYSQL m_MySql;
+	// 数据库连接结构体
+	MYSQL* m_pMySql;		
+	// 数据库ip地址
+	std::string m_sIP;		
+	// 数据库进程端口
+	int m_nPort;		
+	// 数据库用户名
+	std::string m_sName;		
+	// 数据库密码
+	std::string m_sPassWord;
+	// 数据库库名
+	std::string m_sDataBase;	
+	
+	
 
 	// 玩家账号信息::姓名索引
 	std::map<std::string, CarGpsRecPlayer> m_mapPlayerRecName;

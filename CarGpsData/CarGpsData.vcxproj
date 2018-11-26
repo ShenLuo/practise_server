@@ -154,7 +154,10 @@
     <ClInclude Include="CarGpsDef\CarGpsMsgDef.h" />
     <ClInclude Include="CarGpsDef\CarGpsRecordDef.h" />
     <ClInclude Include="CarGpsFile\CarGpsFile.h" />
+    <ClInclude Include="CarGpsLogic\CarGpsLogic.h" />
+    <ClInclude Include="CarGpsServer\CarGpsServer.h" />
     <ClInclude Include="CarGpsSocket\CarGpsSocket.h" />
+    <ClInclude Include="CarGpsSocket\CarGpsSocketDef.h" />
     <ClInclude Include="CarGpsSql\CarGpsSql.h" />
     <ClInclude Include="CarGpsUtilFunc\CarGpsUtil.h" />
     <ClInclude Include="stdafx.h" />
@@ -163,6 +166,8 @@
   <ItemGroup>
     <ClCompile Include="CarGpsData.cpp" />
     <ClCompile Include="CarGpsFile\CarGpsFile.cpp" />
+    <ClCompile Include="CarGpsLogic\CarGpsLogic.cpp" />
+    <ClCompile Include="CarGpsServer\CarGpsServer.cpp" />
     <ClCompile Include="CarGpsSocket\CarGpsSocket.cpp" />
     <ClCompile Include="CarGpsSql\CarGpsSql.cpp" />
     <ClCompile Include="CarGpsUtilFunc\CarGpsUtil.cpp" />

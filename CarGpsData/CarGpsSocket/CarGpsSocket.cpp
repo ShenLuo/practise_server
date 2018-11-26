@@ -3,19 +3,53 @@
 */
 
 #include "CarGpsSocket.h"
+#include "CarGpsSocketDef.h"
 #include <winsock2.h>
 
 //#pragma comment(lib, "Ws2_32.lib")
 
 // 构造Socket
-CarGpsSocket::CarGpsSocket()
+CarGpsSocket::CarGpsSocket(const CarGpsServer* server)
+{
+	if (NULL == server)
+	{
+		return;
+	}
+
+	m_soSocket = INVALID_SOCKET;
+	m_Server = server;
+	m_sIP = "";
+	m_nPort = -1;
+	m_nAFamily = AF_UNSPEC;
+	m_nMaxClientCount = 0;
+	m_nRecThreadID = 0;
+	m_nSendThreadID = 0;
+	m_sRecHandle = NULL;
+	m_sSendHandle = NULL;
+	return;
+}
+
+// 释放Socket
+CarGpsSocket::~CarGpsSocket()
+{
+	m_soSocket = INVALID_SOCKET;
+	m_Server = NULL;
+	m_sIP = "";
+	m_nPort = -1;
+	m_nAFamily = AF_UNSPEC;
+	m_nMaxClientCount = 0;
+	return;
+}
+
+// 初始化socket
+bool CarGpsSocket::InitSocket(int nAF, const char* sIP, int nPort)
 {
 	// 获取WSADATA信息
 	WSADATA wsData;
 	int nResult = WSAStartup(MAKEWORD(2,2), &wsData);
 	if (NO_ERROR != nResult)
 	{
-		return;
+		return false;
 	}
 
 	// 创建Socket对象
@@ -23,32 +57,7 @@ CarGpsSocket::CarGpsSocket()
 	soListen = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (soListen == INVALID_SOCKET)
 	{
-		return;
-	}
-
-	m_soSocket = soListen;
-	return;
-}
-
-// 释放Socket
-CarGpsSocket::~CarGpsSocket()
-{
-	if (m_soSocket == INVALID_SOCKET)
-	{
-		return;
-	}
-
-	closesocket(m_soSocket);
-	WSACleanup();
-	return;
-}
-
-// 绑定目标地址
-bool CarGpsSocket::SocketBind(int nAF, const char* sIP, int nPort)
-{
-	if (m_soSocket == INVALID_SOCKET || strcmp(sIP, "") == 0)
-	{
-		return  false;
+		return false;
 	}
 
 	sockaddr_in stAddress;
@@ -57,15 +66,84 @@ bool CarGpsSocket::SocketBind(int nAF, const char* sIP, int nPort)
 	stAddress.sin_port = htons(nPort);
 
 	// 绑定Socket
-	int nResultB = bind(m_soSocket, (SOCKADDR *)&stAddress, sizeof(stAddress));
+	int nResultB = bind(soListen, (SOCKADDR *)&stAddress, sizeof(stAddress));
 	if (nResultB == SOCKET_ERROR)
 	{
 		int nError = WSAGetLastError();
 		return false;
 	}
 
+	m_soSocket = soListen;
+	m_sIP = sIP;
+	m_nPort = nPort;
+	m_nAFamily = nAF;
 	return true;
 }
+
+// 开始socket
+bool CarGpsSocket::StartSocket(int nType, int nMaxCount)
+{
+	switch (nType)
+	{
+	case SocketType::SocketTypeServer:
+		{
+			// socket服务器等待客户端连接
+			
+			m_nMaxClientCount = nMaxCount;
+		}
+
+		break;
+	case SocketType::SocketTypeClient:
+		{
+			// socket客户端连接服务器
+			if (SocketConnect(m_nAFamily, m_sIP.c_str(), m_nPort))
+			{
+				m_sRecHandle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)CarGpsSocket::RecHandle ,
+					this, 0, &m_nRecThreadID);
+				m_sSendHandle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)CarGpsSocket::SendHandle ,
+					this, 0, &m_nSendThreadID);
+			}
+		}
+
+		break;
+	default:
+		break;
+	}
+}
+
+// 结束socket
+bool CarGpsSocket::EndSocket()
+{
+	if (m_soSocket == INVALID_SOCKET)
+	{
+		return;
+	}
+
+	closesocket(m_soSocket);
+	WSACleanup();
+}
+
+// 接收消息处理函数
+int CarGpsSocket::RecHandle(void* lParam)
+{
+	if (NULL == lParam)
+	{
+		return 0;
+	}
+
+	CarGpsSocket* pSocket = (CarGpsSocket*)lParam;
+	pSocket->SocketRecv();
+}
+
+// 发送消息处理函数
+int CarGpsSocket::SendHandle(void* lParam)
+{
+	if (NULL == lParam)
+	{
+		return 0;
+	}
+}
+
 
 // 连接目标地址
 bool CarGpsSocket::SocketConnect(int nAF, const char* sIP, int nPort)
@@ -90,26 +168,15 @@ bool CarGpsSocket::SocketConnect(int nAF, const char* sIP, int nPort)
 	return true;
 }
 
-// 监听连接地址
-bool CarGpsSocket::SocketListen(int nMaxValue)
-{
-	if (m_soSocket == INVALID_SOCKET)
-	{
-		return false;
-	}
-
-	if (SOCKET_ERROR == listen(m_soSocket, nMaxValue))
-	{
-		return false;
-	}
-
-	return true;
-}
-
 //  接受连接
 bool CarGpsSocket::SocketAccept(SOCKET& newSocket, sockaddr& sockAddr, int& sockAdLen)
 {
 	if (m_soSocket == INVALID_SOCKET)
+	{
+		return false;
+	}
+
+	if (SOCKET_ERROR == listen(m_soSocket, m_nMaxClientCount))
 	{
 		return false;
 	}

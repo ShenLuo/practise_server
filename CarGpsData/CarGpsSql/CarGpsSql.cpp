@@ -14,12 +14,33 @@
 
 CarGpsSql::CarGpsSql()
 {
-	if (NULL == mysql_init(&m_MySql))
+	m_pMySql = NULL;
+	m_sIP = "";
+	m_nPort = -1;
+	m_sName = "";
+	m_sPassWord = "";
+	m_sDataBase = "";
+}
+
+// 释放mysql连接
+CarGpsSql::~CarGpsSql()
+{
+	if (m_pMySql)
+	{
+		delete m_pMySql;
+	}
+}
+
+
+int CarGpsSql::start()
+{
+	m_pMySql = new MYSQL;
+	if (NULL == mysql_init(m_pMySql))
 	{
 		return;
 	}
 
-	if (NULL == mysql_real_connect(&m_MySql, 
+	if (NULL == mysql_real_connect(m_pMySql, 
 		SQLIP,
 		SQLNAME,
 		SQLPASSWORD,
@@ -32,10 +53,14 @@ CarGpsSql::CarGpsSql()
 	}
 }
 
-// 释放mysql连接
-CarGpsSql::~CarGpsSql()
+// 
+int CarGpsSql::stop()
 {
-	return;
+	mysql_close(m_pMySql);
+	if (m_pMySql)
+	{
+		delete m_pMySql;
+	}
 }
 
 // 加载数据库数据
@@ -163,9 +188,9 @@ bool CarGpsSql::SavePlayerWorkInfo(const CarGpsRecPlayerInfo& playerinfo)
 // 读取账号表
 bool CarGpsSql::GetPlayerRecordFromDataBase()
 {
-	mysql_query(&m_MySql, "select * from player;");
+	mysql_query(&m_pMySql, "select * from player;");
 
-	MYSQL_RES* mysqlresult = mysql_store_result(&m_MySql);
+	MYSQL_RES* mysqlresult = mysql_store_result(&m_pMySql);
 	if (NULL == mysqlresult)
 	{
 		return false;
@@ -215,9 +240,9 @@ bool CarGpsSql::SavePlayerRecordToDataBase()
 // 			sqlstr += ");";
 
 			std::string sqlstr = "insert into player values ('123', 'abc', 123)";
-			int nRes = mysql_query(&m_MySql, sqlstr.c_str());
+			int nRes = mysql_query(&m_pMySql, sqlstr.c_str());
 
-			if (mysql_affected_rows(&m_MySql) > 0)
+			if (mysql_affected_rows(&m_pMySql) > 0)
 			{
 				// 设置成已保存
 				//it->second.needsave = false;
@@ -231,9 +256,9 @@ bool CarGpsSql::SavePlayerRecordToDataBase()
 // 读取信息表
 bool CarGpsSql::GetPlayerInfoRecordFromDataBase()
 {
-	mysql_query(&m_MySql, "select * from player_info;");
+	mysql_query(&m_pMySql, "select * from player_info;");
 
-	MYSQL_RES* mysqlresult = mysql_store_result(&m_MySql);
+	MYSQL_RES* mysqlresult = mysql_store_result(&m_pMySql);
 	if (NULL == mysqlresult)
 	{
 		return false;
@@ -294,9 +319,9 @@ bool CarGpsSql::SavePlayerInfoRecordToDataBase()
 				sqlstr += it->second[i].time;
 				sqlstr += it->second[i].timestage;
 				sqlstr += ");";
-				mysql_query(&m_MySql, sqlstr.c_str());
+				mysql_query(&m_pMySql, sqlstr.c_str());
 
-				if (mysql_affected_rows(&m_MySql) > 0)
+				if (mysql_affected_rows(&m_pMySql) > 0)
 				{
 					// 设置成已保存
 					it->second[i].needsave = false;
