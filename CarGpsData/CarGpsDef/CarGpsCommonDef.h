@@ -2,7 +2,9 @@
 	gpsÕ®”√√∂æŸ
 */
 
-#pragma once
+#ifndef _CARGPSCOMMONDEF_
+#define _CARGPSCOMMONDEF_
+
 enum MagicNum
 {
 	MagicNum0,
@@ -11,3 +13,4 @@ enum MagicNum
 	MagicNum3,
 };
 
+#endif // _CARGPSCOMMONDEF_

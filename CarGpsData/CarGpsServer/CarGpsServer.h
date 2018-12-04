@@ -5,9 +5,13 @@
 	gps服务器类定义
 */
 
-#pragma once
+#ifndef _CARGPSSERVER_
+#define _CARGPSSERVER_
+
 #include "../CarGpsSql/CarGpsSql.h"
 #include "../CarGpsSocket/CarGpsSocket.h"
+
+class CarGpsSocket;
 
 class CarGpsServer
 {
@@ -26,3 +30,5 @@ private:
 	CarGpsSql* m_pCarGpsSql; 
 	CarGpsSocket* m_pCarGpsSocket;
 };
+
+#endif // _CARGPSSERVER_

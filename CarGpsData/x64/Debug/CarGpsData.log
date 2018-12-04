@@ -1,11 +1,17 @@
-﻿生成启动时间为 11/22/2018 7:50:42 PM。
+﻿生成启动时间为 11/27/2018 8:37:04 PM。
      1>项目“D:\TestCode\Test_workserver\CarGpsData\CarGpsData.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files\MySQL\MySQL Server 5.7\include" /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc110.pdb" /Gd /TP /errorReport:prompt /D _CRT_SECURE_NO_WARNINGS CarGpsFile\CarGpsFile.cpp
-         CarGpsFile.cpp
+         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files\MySQL\MySQL Server 5.7\include" /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc110.pdb" /Gd /TP /errorReport:prompt /D _CRT_SECURE_NO_WARNINGS CarGpsData.cpp CarGpsServer\CarGpsServer.cpp CarGpsSocket\CarGpsSocket.cpp
+         CarGpsSocket.cpp
+         正在生成代码...
+         正在跳过...(未检测到相关更改)
+         CarGpsServer.cpp
+         CarGpsData.cpp
        Link:
          D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\TestCode\Test_workserver\x64\Debug\CarGpsData.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files\MySQL\MySQL Server 5.7\lib" ws2_32.lib libmysql.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\TestCode\Test_workserver\x64\Debug\CarGpsData.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\TestCode\Test_workserver\x64\Debug\CarGpsData.lib" /MACHINE:X64 x64\Debug\CarGpsData.obj
          x64\Debug\CarGpsFile.obj
+         x64\Debug\CarGpsLogic.obj
+         x64\Debug\CarGpsServer.obj
          x64\Debug\CarGpsSocket.obj
          x64\Debug\CarGpsSql.obj
          x64\Debug\CarGpsUtil.obj
@@ -15,4 +21,4 @@
 
 生成成功。
 
-已用时间 00:00:01.32
+已用时间 00:00:02.07

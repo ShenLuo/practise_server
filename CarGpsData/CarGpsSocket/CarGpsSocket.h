@@ -2,15 +2,16 @@
 	gps网络操作
 */
 
-#pragma once
-#include "../CarGpsServer/CarGpsServer.h"
-#include <winsock2.h>
+#ifndef _CARGPSSOCKET_
+#define _CARGPSSOCKET_
 
+#include "../CarGpsServer/CarGpsServer.h"
+class CarGpsServer;
 class CarGpsSocket
 {
 public:
 	// 创建SOCKET
-	CarGpsSocket(const CarGpsServer* server);	
+	CarGpsSocket(CarGpsServer* server);	
 
 	// 释放SOCKET
 	~CarGpsSocket();
@@ -42,12 +43,6 @@ private:
 
 	// 接受连接数据
 	bool SocketRecv(SOCKET& newSocket, char* buf, int nSize, int nFlag);
-
-	// 断开连接
-	bool SocketShutDown(SOCKET& newSocket, int nType);
-
-	// 断开连接
-	bool SockeClose(SOCKET& newSocket);
 private:
 	// Socket
 	SOCKET m_soSocket;
@@ -65,7 +60,7 @@ private:
 	int m_nMaxClientCount;
 
 	// 服务器
-	const CarGpsServer* m_Server;
+	CarGpsServer* m_Server;
 
 	// 接收消息线程
 	void* m_sRecHandle;
@@ -75,3 +70,5 @@ private:
 	void* m_sSendHandle;
 	unsigned long m_nSendThreadID;
 };
+
+#endif // _CARGPSSOCKET_

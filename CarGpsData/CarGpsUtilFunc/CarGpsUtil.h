@@ -2,7 +2,8 @@
 	gps¹«ÓÃ²Ù×÷
 */
 
-#pragma once
+#ifndef _CARGPSUTIL_
+#define _CARGPSUTIL_
 
 #include <vector>
 #include <string>
@@ -28,3 +29,4 @@ private:
 	std::vector<std::string> m_vecString;
 };
 
+#endif // #endif

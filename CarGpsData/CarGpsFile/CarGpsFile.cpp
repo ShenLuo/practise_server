@@ -6,7 +6,7 @@
 #include "../CarGpsDef/CarGpsCommonDef.h"
 #include <time.h>
 #include <stdio.h>
-#include<io.h>
+#include <io.h>
 #include <map>
 
 CarGpsDataFile::CarGpsDataFile(const char* pFileName)

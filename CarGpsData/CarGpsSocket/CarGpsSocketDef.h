@@ -2,10 +2,15 @@
 	gpsÍøÂç²Ù×÷Ã¶¾Ù
 */
 
-#pragma once
+#ifndef _CARGPSSOCKETDEF_
+#define _CARGPSSOCKETDEF_
 
 enum SocketType
 {
 	SocketTypeServer,
 	SocketTypeClient,
 };
+
+
+
+#endif // _CARGPSSOCKETDEF_

@@ -37,7 +37,7 @@ int CarGpsSql::start()
 	m_pMySql = new MYSQL;
 	if (NULL == mysql_init(m_pMySql))
 	{
-		return;
+		return 0;
 	}
 
 	if (NULL == mysql_real_connect(m_pMySql, 
@@ -49,8 +49,10 @@ int CarGpsSql::start()
 		NULL,
 		0))
 	{
-		return;
+		return 0;
 	}
+
+	return 0;
 }
 
 // 
@@ -61,6 +63,8 @@ int CarGpsSql::stop()
 	{
 		delete m_pMySql;
 	}
+
+	return 0;
 }
 
 // 加载数据库数据
@@ -188,9 +192,9 @@ bool CarGpsSql::SavePlayerWorkInfo(const CarGpsRecPlayerInfo& playerinfo)
 // 读取账号表
 bool CarGpsSql::GetPlayerRecordFromDataBase()
 {
-	mysql_query(&m_pMySql, "select * from player;");
+	mysql_query(m_pMySql, "select * from player;");
 
-	MYSQL_RES* mysqlresult = mysql_store_result(&m_pMySql);
+	MYSQL_RES* mysqlresult = mysql_store_result(m_pMySql);
 	if (NULL == mysqlresult)
 	{
 		return false;
@@ -240,9 +244,9 @@ bool CarGpsSql::SavePlayerRecordToDataBase()
 // 			sqlstr += ");";
 
 			std::string sqlstr = "insert into player values ('123', 'abc', 123)";
-			int nRes = mysql_query(&m_pMySql, sqlstr.c_str());
+			int nRes = mysql_query(m_pMySql, sqlstr.c_str());
 
-			if (mysql_affected_rows(&m_pMySql) > 0)
+			if (mysql_affected_rows(m_pMySql) > 0)
 			{
 				// 设置成已保存
 				//it->second.needsave = false;
@@ -256,9 +260,9 @@ bool CarGpsSql::SavePlayerRecordToDataBase()
 // 读取信息表
 bool CarGpsSql::GetPlayerInfoRecordFromDataBase()
 {
-	mysql_query(&m_pMySql, "select * from player_info;");
+	mysql_query(m_pMySql, "select * from player_info;");
 
-	MYSQL_RES* mysqlresult = mysql_store_result(&m_pMySql);
+	MYSQL_RES* mysqlresult = mysql_store_result(m_pMySql);
 	if (NULL == mysqlresult)
 	{
 		return false;
@@ -319,9 +323,9 @@ bool CarGpsSql::SavePlayerInfoRecordToDataBase()
 				sqlstr += it->second[i].time;
 				sqlstr += it->second[i].timestage;
 				sqlstr += ");";
-				mysql_query(&m_pMySql, sqlstr.c_str());
+				mysql_query(m_pMySql, sqlstr.c_str());
 
-				if (mysql_affected_rows(&m_pMySql) > 0)
+				if (mysql_affected_rows(m_pMySql) > 0)
 				{
 					// 设置成已保存
 					it->second[i].needsave = false;

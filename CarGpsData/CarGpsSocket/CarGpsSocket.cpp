@@ -4,12 +4,9 @@
 
 #include "CarGpsSocket.h"
 #include "CarGpsSocketDef.h"
-#include <winsock2.h>
-
-//#pragma comment(lib, "Ws2_32.lib")
 
 // 构造Socket
-CarGpsSocket::CarGpsSocket(const CarGpsServer* server)
+CarGpsSocket::CarGpsSocket(CarGpsServer* server)
 {
 	if (NULL == server)
 	{
@@ -60,6 +57,11 @@ bool CarGpsSocket::InitSocket(int nAF, const char* sIP, int nPort)
 		return false;
 	}
 
+	WSAIoctl(soListen, )
+	ioctlsocket(soListen, FIONBIO, )
+
+
+
 	sockaddr_in stAddress;
 	stAddress.sin_family = nAF;
 	stAddress.sin_addr.S_un.S_addr = inet_addr(sIP);
@@ -88,7 +90,10 @@ bool CarGpsSocket::StartSocket(int nType, int nMaxCount)
 	case SocketType::SocketTypeServer:
 		{
 			// socket服务器等待客户端连接
-			
+			SOCKET socketTemp;
+			sockaddr stAddTemp;
+			int nAddLen;
+			SocketAccept(socketTemp, stAddTemp, nAddLen);
 			m_nMaxClientCount = nMaxCount;
 		}
 
@@ -109,6 +114,8 @@ bool CarGpsSocket::StartSocket(int nType, int nMaxCount)
 	default:
 		break;
 	}
+
+	return true;
 }
 
 // 结束socket
@@ -116,11 +123,18 @@ bool CarGpsSocket::EndSocket()
 {
 	if (m_soSocket == INVALID_SOCKET)
 	{
-		return;
+		return false;
 	}
 
+	// 关闭线程
+	TerminateThread(m_sRecHandle, 1);
+	TerminateThread(m_sSendHandle, 1);
+
+	// 关闭socket
 	closesocket(m_soSocket);
 	WSACleanup();
+
+	return true;
 }
 
 // 接收消息处理函数
@@ -132,7 +146,8 @@ int CarGpsSocket::RecHandle(void* lParam)
 	}
 
 	CarGpsSocket* pSocket = (CarGpsSocket*)lParam;
-	pSocket->SocketRecv();
+	pSocket->SocketRecv(pSocket->m_soSocket, "", 0, 0);
+	return 0;
 }
 
 // 发送消息处理函数
@@ -142,8 +157,15 @@ int CarGpsSocket::SendHandle(void* lParam)
 	{
 		return 0;
 	}
+
+	CarGpsSocket* pSocket = (CarGpsSocket*)lParam;
+	pSocket->SocketSend(pSocket->m_soSocket, "", 0, 0);
+	return 0;
 }
 
+////////////////////////////////////////////////////////////////////////////
+// 内部函数
+////////////////////////////////////////////////////////////////////////////
 
 // 连接目标地址
 bool CarGpsSocket::SocketConnect(int nAF, const char* sIP, int nPort)
@@ -232,30 +254,6 @@ bool CarGpsSocket::SocketRecv(SOCKET& newSocket, char* buf, int nSize, int nFlag
 	else
 	{
 		
-	}
-
-	return true;
-}
-
-// 断开连接
-bool CarGpsSocket::SocketShutDown(SOCKET& newSocket, int nType)
-{
-	int nResult = shutdown(newSocket, nType);
-	if (SOCKET_ERROR == nResult)
-	{
-		return false;
-	}
-
-	return true;
-}
-
-// 断开连接
-bool CarGpsSocket::SockeClose(SOCKET& newSocket)
-{
-	int nResult = closesocket(newSocket);
-	if (nResult == SOCKET_ERROR)
-	{
-		return false;
 	}
 
 	return true;

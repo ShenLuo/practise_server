@@ -2,7 +2,8 @@
 	gps数据库操作
 */
 
-#pragma once
+#ifndef _CARGPSSQL_
+#define _CARGPSSQL_
 
 #include "../CarGpsDef/CarGpsRecordDef.h"
 #include <string>
@@ -86,3 +87,5 @@ private:
 	// 玩家加班信息
 	std::map<int, std::vector<CarGpsRecPlayerInfo>> m_mapPlayerInfoRec;
 };
+
+#endif // _CARGPSSQL_

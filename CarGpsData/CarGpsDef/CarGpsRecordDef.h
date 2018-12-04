@@ -2,7 +2,9 @@
 	CarGps数据表结构定义
 */
 
-#pragma once
+#ifndef _CARGPSRECORDDEF_
+#define _CARGPSRECORDDEF_
+
 #include <string>
 
 // 玩家账号
@@ -55,4 +57,6 @@ enum EnumCarGpsRecPlayerInfo
 	EnumCarGpsRecPlayerInfo_Time = 2,
 	EnumCarGpsRecPlayerInfo_TimeStage = 3,
 };
+
+#endif // _CARGPSRECORDDEF_
 

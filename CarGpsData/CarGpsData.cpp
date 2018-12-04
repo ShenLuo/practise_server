@@ -123,27 +123,27 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	// 创建服务器网络操作线程
 	{
-		CarGpsSocket carSockTep;
-		carSockTep.SocketBind(AF_INET, "192.168.1.40", 6677);
-		carSockTep.SocketListen(100);
-
-		// 接受客户端的连接
-		while (true)
-		{
-			sockaddr soAddr;
-			int nSoAddr = sizeof(soAddr);
-
-			// 处理员工操作
-			if(carSockTep.SocketAccept(g_sock[g_nSockIndex], soAddr, nSoAddr))
-			{
-				CreateThread(NULL, 0, 
-					(LPTHREAD_START_ROUTINE)HandleStuffMsg,
-					&g_sock[g_nSockIndex], 0, &g_instance[g_nInstanceIndex]);
-
-				g_nInstanceIndex++;
-				g_nSockIndex++;
-			}
-		}
+// 		CarGpsSocket carSockTep;
+// 		carSockTep.SocketBind(AF_INET, "192.168.1.40", 6677);
+// 		carSockTep.SocketListen(100);
+// 
+// 		// 接受客户端的连接
+// 		while (true)
+// 		{
+// 			sockaddr soAddr;
+// 			int nSoAddr = sizeof(soAddr);
+// 
+// 			// 处理员工操作
+// 			if(carSockTep.SocketAccept(g_sock[g_nSockIndex], soAddr, nSoAddr))
+// 			{
+// 				CreateThread(NULL, 0, 
+// 					(LPTHREAD_START_ROUTINE)HandleStuffMsg,
+// 					&g_sock[g_nSockIndex], 0, &g_instance[g_nInstanceIndex]);
+// 
+// 				g_nInstanceIndex++;
+// 				g_nSockIndex++;
+// 			}
+// 		}
 	}
 	
 

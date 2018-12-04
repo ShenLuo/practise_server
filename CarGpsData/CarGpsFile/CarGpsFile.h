@@ -2,7 +2,9 @@
 	gps数据文件操作
 */
 
-#pragma once
+#ifndef _CARGPSFILE_
+#define _CARGPSFILE_
+
 #include <stdio.h>
 #include <string>
 #include <map>
@@ -29,3 +31,5 @@ private:
 	std::string m_sFileName;
 	map<string, map<string, string>> m_stFileContent;
 };
+
+#endif // _CARGPSFILE_

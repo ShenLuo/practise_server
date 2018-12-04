@@ -19,12 +19,12 @@ CarGpsServer::~CarGpsServer()
 bool CarGpsServer::InitServer()
 {
 	m_pCarGpsSql = new CarGpsSql;
-	m_pCarGpsSocket = new CarGpsSocket;
-
+	m_pCarGpsSocket = new CarGpsSocket(this);
+	return true;
 }
 
 // 运行服务器逻辑
 bool CarGpsServer::StartServer()
 {
-	
+	return true;
 }
