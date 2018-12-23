@@ -75,6 +75,9 @@
     <ClInclude Include="CarGpsSocket\CarGpsSocketDef.h">
       <Filter>CarGpsSocket</Filter>
     </ClInclude>
+    <ClInclude Include="CarGpsSocket\CarGpsSocketClient.h">
+      <Filter>CarGpsSocket</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -100,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="CarGpsLogic\CarGpsLogic.cpp">
       <Filter>CarGpsLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="CarGpsSocket\CarGpsSocketClient.cpp">
+      <Filter>CarGpsSocket</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

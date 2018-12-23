@@ -57,11 +57,6 @@ bool CarGpsSocket::InitSocket(int nAF, const char* sIP, int nPort)
 		return false;
 	}
 
-	WSAIoctl(soListen, )
-	ioctlsocket(soListen, FIONBIO, )
-
-
-
 	sockaddr_in stAddress;
 	stAddress.sin_family = nAF;
 	stAddress.sin_addr.S_un.S_addr = inet_addr(sIP);

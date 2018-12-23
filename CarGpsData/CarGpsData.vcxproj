@@ -157,6 +157,7 @@
     <ClInclude Include="CarGpsLogic\CarGpsLogic.h" />
     <ClInclude Include="CarGpsServer\CarGpsServer.h" />
     <ClInclude Include="CarGpsSocket\CarGpsSocket.h" />
+    <ClInclude Include="CarGpsSocket\CarGpsSocketClient.h" />
     <ClInclude Include="CarGpsSocket\CarGpsSocketDef.h" />
     <ClInclude Include="CarGpsSql\CarGpsSql.h" />
     <ClInclude Include="CarGpsUtilFunc\CarGpsUtil.h" />
@@ -169,6 +170,7 @@
     <ClCompile Include="CarGpsLogic\CarGpsLogic.cpp" />
     <ClCompile Include="CarGpsServer\CarGpsServer.cpp" />
     <ClCompile Include="CarGpsSocket\CarGpsSocket.cpp" />
+    <ClCompile Include="CarGpsSocket\CarGpsSocketClient.cpp" />
     <ClCompile Include="CarGpsSql\CarGpsSql.cpp" />
     <ClCompile Include="CarGpsUtilFunc\CarGpsUtil.cpp" />
     <ClCompile Include="stdafx.cpp">
