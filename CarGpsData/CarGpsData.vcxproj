@@ -150,12 +150,14 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CarGpsCommon\CarGpsCommon.h" />
     <ClInclude Include="CarGpsDef\CarGpsCommonDef.h" />
     <ClInclude Include="CarGpsDef\CarGpsMsgDef.h" />
     <ClInclude Include="CarGpsDef\CarGpsRecordDef.h" />
     <ClInclude Include="CarGpsFile\CarGpsFile.h" />
     <ClInclude Include="CarGpsLogic\CarGpsLogic.h" />
     <ClInclude Include="CarGpsServer\CarGpsServer.h" />
+    <ClInclude Include="CarGpsServer\CarGpsServerRegisterLogicModule.h" />
     <ClInclude Include="CarGpsSocket\CarGpsSocket.h" />
     <ClInclude Include="CarGpsSocket\CarGpsSocketClient.h" />
     <ClInclude Include="CarGpsSocket\CarGpsSocketDef.h" />

@@ -34,6 +34,9 @@
     <Filter Include="CarGpsLogic">
       <UniqueIdentifier>{bb101745-644e-4d80-b750-fde87299f512}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CarGpsCommon">
+      <UniqueIdentifier>{a50426ab-fc63-4925-917f-6ad100708b75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -77,6 +80,12 @@
     </ClInclude>
     <ClInclude Include="CarGpsSocket\CarGpsSocketClient.h">
       <Filter>CarGpsSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="CarGpsServer\CarGpsServerRegisterLogicModule.h">
+      <Filter>CarGpsServer</Filter>
+    </ClInclude>
+    <ClInclude Include="CarGpsCommon\CarGpsCommon.h">
+      <Filter>CarGpsCommon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
