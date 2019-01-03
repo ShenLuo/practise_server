@@ -69,9 +69,6 @@
     <ClInclude Include="CarGpsDef\CarGpsCommonDef.h">
       <Filter>Define</Filter>
     </ClInclude>
-    <ClInclude Include="CarGpsServer\CarGpsServer.h">
-      <Filter>CarGpsServer</Filter>
-    </ClInclude>
     <ClInclude Include="CarGpsLogic\CarGpsLogic.h">
       <Filter>CarGpsLogic</Filter>
     </ClInclude>
@@ -81,11 +78,11 @@
     <ClInclude Include="CarGpsSocket\CarGpsSocketClient.h">
       <Filter>CarGpsSocket</Filter>
     </ClInclude>
-    <ClInclude Include="CarGpsServer\CarGpsServerRegisterLogicModule.h">
-      <Filter>CarGpsServer</Filter>
-    </ClInclude>
     <ClInclude Include="CarGpsCommon\CarGpsCommon.h">
       <Filter>CarGpsCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="CarGpsServer\CarGpsServer.h">
+      <Filter>CarGpsServer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +112,12 @@
     </ClCompile>
     <ClCompile Include="CarGpsSocket\CarGpsSocketClient.cpp">
       <Filter>CarGpsSocket</Filter>
+    </ClCompile>
+    <ClCompile Include="CarGpsCommon\CarGpsCommon.cpp">
+      <Filter>CarGpsCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="CarGpsCommon\CarGpsLogicModuleRegister.cpp">
+      <Filter>CarGpsLogic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -21,14 +21,14 @@ public:
 	// ¼ÓÔØÅäÖÃÎÄ¼ş
 	void loadFile();
 
-	std::string getStringVal(char* sSec , char*sItem);
+	string getStringVal(char* sSec , char*sItem);
 	int getIntVal(char* sSec , char*sItem);
 
 private:
 	int stringToInt(const char* sStr);
 
 private:
-	std::string m_sFileName;
+	string m_sFileName;
 	map<string, map<string, string>> m_stFileContent;
 };
 

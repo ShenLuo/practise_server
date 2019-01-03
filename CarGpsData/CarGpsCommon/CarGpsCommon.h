@@ -1,23 +1,8 @@
 /*
 	gps服务器通用接口
 */
+#ifndef _CARGPSCOMMON_H_
+#define _CARGPSCOMMON_H_
 
-#ifndef CARGPSCOMMON_H_
-#define CARGPSCOMMON_H_
 
-void LogInfo(const char* info)
-{
-
-}
-
-void LogWarning(const char* info)
-{
-
-}
-
-void LogError(const char* info)
-{
-
-}
-
-#endif
+#endif // _CARGPSCOMMON_H_

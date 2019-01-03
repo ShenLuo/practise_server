@@ -8,7 +8,6 @@
 #include "../CarGpsSql/CarGpsSql.h"
 #include "../CarGpsSocket/CarGpsSocket.h"
 #include "../CarGpsLogic/CarGpsLogic.h"
-#include "../CarGpsCommon/CarGpsCommon.h"
 
 class CarGpsSocket;
 
@@ -50,14 +49,39 @@ public:
 	}
 
 	// 加载逻辑模块消息回调
+	class MsgPriority
+	{
+	public:
+		MsgPriority(int value)
+		{
+			nPriority = value;
+		}
+
+		bool operator< (MsgPriority msgp)
+		{
+			return msgp.nPriority < nPriority;
+		}
+
+	private:
+		int nPriority;
+	};
+
 	template<typename HandleType>
 	class HandleClass
 	{
 	public:
-		static void HandleMsg(void* handle)
+		HandleClass(HandleType&& handle)
 		{
-			((HandleType*)handle)();
+			mhandle = handle;
 		}
+
+		static void HandleMsg(void* handleclass)
+		{
+			((HandleClass*)handleclass)->mhandle();
+		}
+
+	private:
+		HandleType mhandle;
 	};
 
 	typedef void(*HANDLESTATICFUNC)(void*);
@@ -68,10 +92,37 @@ public:
 		void* handleBind;
 	};
 
-	template<typename HandleType>
-	bool RegisterMsgHandle(HandleType handle)
-	{
+	typedef std::map<MsgPriority,HandleWraple> MapHandle;
+	typedef std::map<int,MapHandle> MapMsgHandle;
 
+	template<typename HandleType>
+	bool RegisterMsgHandle(int msgid, HandleType handle, int priority = 1)
+	{
+		HandleClass handleclass = new HandleClass<HandleType>(handle);
+		if (NULL == handleclass)
+		{
+			LogInfo("");
+			return false;
+		}
+
+		HandleWraple handlewraple;
+		handlewraple.handleStaticFunc = &handleclass::HandleMsg;
+		handlewraple = &handleclass;
+
+		MapMsgHandle::iterator it = m_mapMsgHandle.find(msgid);
+		if (it == m_mapMsgHandle.end())
+		{
+			it->second.insert(std::make_pair(MsgPriority(priority), handlewraple));
+		}
+		else
+		{
+			MapHandle temp;
+			temp.insert(std::make_pair(MsgPriority(priority), handlewraple));
+			m_mapMsgHandle.insert(std::make_pair(msgid, temp));
+		}
+
+		LogInfo("");
+		return true;
 	}
 
 private:
@@ -81,6 +132,9 @@ private:
 
 	// 逻辑模块
 	std::map<std::string, CarGpsLogic*> m_mapLogicModules;
+
+	// 消息模块
+	MapMsgHandle m_mapMsgHandle;
 };
 
 #endif // _CARGPSSERVER_

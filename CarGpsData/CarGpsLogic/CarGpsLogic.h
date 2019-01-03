@@ -12,9 +12,9 @@ public:
 	~CarGpsLogic();
 
 	char* GetLogicName(){return "";}
-	bool OnInit(){};
-	bool OnStart(){};
-	bool OnEnd(){};
+	bool OnInit(){return true;}
+	bool OnStart(){return true;}
+	bool OnEnd(){return true;}
 private:
 
 };
