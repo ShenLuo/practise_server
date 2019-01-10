@@ -8,24 +8,13 @@
 #include "../CarGpsSql/CarGpsSql.h"
 #include "../CarGpsSocket/CarGpsSocket.h"
 #include "../CarGpsLogic/CarGpsLogic.h"
+#include <thread>
 
-class CarGpsSocket;
+using namespace std;
 
 class CarGpsServer
 {
 public:
-	CarGpsServer();
-	~CarGpsServer();
-
-	// 初始化服务器
-	bool InitServer();
-
-	// 运行服务器逻辑
-	bool StartServer();
-
-	// 关闭服务器
-	bool EndServer();
-
 	// 加载逻辑模块
 	template <typename LogicModuleType>
 	bool RegisterLogicModule()
@@ -125,6 +114,29 @@ public:
 		return true;
 	}
 
+	// 构造函数
+	CarGpsServer();
+	~CarGpsServer();
+
+	// 运行服务器
+	virtual bool RunServer();
+
+private:
+	// 服务器线程入口
+	virtual bool ThreadServer();
+
+	// 初始化服务器
+	virtual bool InitServer();
+
+	// 开始服务器逻辑
+	virtual bool StartServer();
+
+	// 服务器运行中
+	virtual bool UpdataServer();
+
+	// 关闭服务器
+	virtual bool EndServer();
+
 private:
 	CarGpsSql* m_pCarGpsSql; 
 	CarGpsSocket* m_pCarGpsSocket;
@@ -135,6 +147,9 @@ private:
 
 	// 消息模块
 	MapMsgHandle m_mapMsgHandle;
+
+	// 服务器线程
+	std::thread m_thread;
 };
 
 #endif // _CARGPSSERVER_
