@@ -41,7 +41,7 @@ void CarGpsDataFile::loadFile()
 	char temp = 0;
 
 	m_stFileContent.clear();
-	std::map<string, string> temItem;
+	std::map<std::string, std::string> temItem;
 	temItem.clear();
 
 	bool bSection = false;
@@ -145,13 +145,13 @@ void CarGpsDataFile::loadFile()
 
 std::string CarGpsDataFile::getStringVal(char* sSec , char*sItem)
 {
-	map<string, map<string, string>>::iterator it = m_stFileContent.find(sSec);
+	std::map<std::string, std::map<std::string, std::string>>::iterator it = m_stFileContent.find(sSec);
 	if (it == m_stFileContent.end())
 	{
 		return "";
 	}
 
-	std::map<string, string>::iterator it_item = it->second.find(sItem);
+	std::map<std::string, std::string>::iterator it_item = it->second.find(sItem);
 	if (it_item == it->second.end())
 	{
 		return "";
@@ -162,13 +162,13 @@ std::string CarGpsDataFile::getStringVal(char* sSec , char*sItem)
 
 int CarGpsDataFile::getIntVal(char* sSec , char*sItem)
 {
-	map<string, map<string, string>>::iterator it = m_stFileContent.find(sSec);
+	std::map<std::string, std::map<std::string, std::string>>::iterator it = m_stFileContent.find(sSec);
 	if (it == m_stFileContent.end())
 	{
 		return MagicNum0;
 	}
 
-	std::map<string, string>::iterator it_item = it->second.find(sItem);
+	std::map<std::string, std::string>::iterator it_item = it->second.find(sItem);
 	if (it_item == it->second.end())
 	{
 		return MagicNum0;

@@ -10,7 +10,10 @@
 #include "../CarGpsLogic/CarGpsLogic.h"
 #include <thread>
 
-using namespace std;
+class CarGpsSocket;
+class CarGpsSql;
+
+//using namespace std;
 
 class CarGpsServer
 {
@@ -123,7 +126,10 @@ public:
 
 private:
 	// 服务器线程入口
-	virtual bool ThreadServer();
+	virtual void ThreadServer(void* pParam);
+
+	// 注册服务器模块
+	virtual bool RegisterServer();
 
 	// 初始化服务器
 	virtual bool InitServer();

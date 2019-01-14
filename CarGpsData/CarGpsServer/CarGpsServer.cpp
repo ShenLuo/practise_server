@@ -17,7 +17,25 @@ CarGpsServer::~CarGpsServer()
 
 bool CarGpsServer::RunServer()
 {
-	m_thread = new thread(&ThreadServer, NULL);
+	//m_thread = thread(std::bind(&CarGpsServer::ThreadServer, this));
+	m_thread = std::thread(&CarGpsServer::ThreadServer, this, nullptr);
+	//std::thread temp = std::move(m_thread);
+	m_thread.join();
+	return true;
+}
+
+// 服务器线程入口
+void CarGpsServer::ThreadServer(void* pParam)
+{
+	RegisterServer();
+	InitServer();
+	StartServer();
+	UpdataServer();
+}
+
+// 注册服务器模块
+bool CarGpsServer::RegisterServer()
+{
 	return true;
 }
 
@@ -53,11 +71,14 @@ bool CarGpsServer::StartServer()
 // 服务器运行中
 bool CarGpsServer::UpdataServer()
 {
-	// 运行逻辑模块
-	std::map<std::string, CarGpsLogic*>::iterator it = m_mapLogicModules.begin();
-	for(; it != m_mapLogicModules.end(); it++)
+	while (true)
 	{
-		it->second->OnUpdata();
+		// 运行逻辑模块
+		std::map<std::string, CarGpsLogic*>::iterator it = m_mapLogicModules.begin();
+		for(; it != m_mapLogicModules.end(); it++)
+		{
+			it->second->OnUpdata();
+		}
 	}
 
 	return true;

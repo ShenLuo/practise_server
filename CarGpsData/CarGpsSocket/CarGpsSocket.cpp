@@ -4,6 +4,7 @@
 
 #include "CarGpsSocket.h"
 #include "CarGpsSocketDef.h"
+#include <winsock.h>
 
 // ππ‘ÏSocket
 CarGpsSocket::CarGpsSocket(CarGpsServer* server)

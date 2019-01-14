@@ -9,8 +9,6 @@
 #include <string>
 #include <map>
 
-using namespace std;
-
 class CarGpsDataFile
 {
 public:
@@ -21,15 +19,15 @@ public:
 	// º”‘ÿ≈‰÷√Œƒº˛
 	void loadFile();
 
-	string getStringVal(char* sSec , char*sItem);
+	std::string getStringVal(char* sSec , char*sItem);
 	int getIntVal(char* sSec , char*sItem);
 
 private:
 	int stringToInt(const char* sStr);
 
 private:
-	string m_sFileName;
-	map<string, map<string, string>> m_stFileContent;
+	std::string m_sFileName;
+	std::map<std::string, std::map<std::string, std::string>> m_stFileContent;
 };
 
 #endif // _CARGPSFILE_
